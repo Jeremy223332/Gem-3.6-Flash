@@ -8,6 +8,6 @@
 },
 "dependencies": {
 "discord.js": "^14.21.0",
-"@google/genai": "^1.0.0"
+"@google/genai": "latest"
 }
 }
