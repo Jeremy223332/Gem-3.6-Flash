@@ -24,13 +24,13 @@ console.log("Web server is running.");
 });
 
 client.once("ready", () => {
-console.log(client.user.tag + " is online!");
+console.log("Gem 3.6 Flash is online!");
 
 client.user.setPresence({
 status: "online",
 activities: [
 {
-name: "with Gem 3.6 Flash",
+name: "with Gemini",
 type: 0
 }
 ]
@@ -40,18 +40,15 @@ type: 0
 client.on("messageCreate", async (message) => {
 if (message.author.bot) return;
 
-const mentioned = message.mentions.has(client.user);
-const saysGem = message.content.toLowerCase().includes("gem");
-
-if (!mentioned && !saysGem) return;
+if (!message.mentions.has(client.user)) return;
 
 const prompt = message.content
-.replace("<@" + client.user.id + ">", "")
+.replace(new RegExp("<@!?"+client.user.id+">", "g"), "")
 .trim();
 
 if (!prompt) {
 await message.reply(
-"Gem 3.6 Flash is online! What would you like to ask me?"
+"⚡ Gem 3.6 Flash is online! Ask me something."
 );
 return;
 }
@@ -60,17 +57,15 @@ try {
 await message.channel.sendTyping();
 
 ```
-const response = await ai.models.generateContent({
+const result = await ai.models.generateContent({
   model: "gemini-2.5-flash",
   contents: prompt
 });
 
-console.log("Gemini response:", response);
-
-const reply = response.text;
+const reply = result.text;
 
 if (!reply) {
-  await message.reply("I couldn't generate a response right now.");
+  await message.reply("Gemini didn't return a response.");
   return;
 }
 
@@ -78,15 +73,15 @@ if (reply.length <= 2000) {
   await message.reply(reply);
 } else {
   for (let i = 0; i < reply.length; i += 1900) {
-    await message.channel.send(reply.substring(i, i + 1900));
+    await message.channel.send(reply.slice(i, i + 1900));
   }
 }
 ```
 
 } catch (error) {
-console.error("Gemini error:", error);
+console.error("GEMINI ERROR:", error);
 await message.reply(
-"Something went wrong while talking to Gemini."
+"⚠️ Gemini couldn't respond. Check the Render logs."
 );
 }
 });
