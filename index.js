@@ -65,7 +65,9 @@ const response = await ai.models.generateContent({
   contents: prompt
 });
 
-const reply = response.text();
+console.log("Gemini response:", response);
+
+const reply = response.text;
 
 if (!reply) {
   await message.reply("I couldn't generate a response right now.");
