@@ -35,5 +35,17 @@ client.on("messageCreate", (message) => {
     );
   }
 });
+client.once('ready', () => {
+    console.log(`⚡ ${client.user.tag} is online!`);
 
+    client.user.setPresence({
+        status: 'online',
+        activities: [
+            {
+                name: 'with Gem 3.6 Flash',
+                type: 0
+            }
+        ]
+    });
+});
 client.login(process.env.DISCORD_TOKEN);
