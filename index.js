@@ -1,4 +1,5 @@
 const { Client, GatewayIntentBits } = require("discord.js");
+const http = require("http");
 
 const client = new Client({
   intents: [
@@ -6,6 +7,16 @@ const client = new Client({
     GatewayIntentBits.GuildMessages,
     GatewayIntentBits.MessageContent
   ]
+});
+
+// Small web server for Render
+const server = http.createServer((req, res) => {
+  res.writeHead(200, { "Content-Type": "text/plain" });
+  res.end("Gem 3.6 Flash is online! ⚡");
+});
+
+server.listen(process.env.PORT || 3000, () => {
+  console.log("Web server is running.");
 });
 
 client.once("ready", () => {
